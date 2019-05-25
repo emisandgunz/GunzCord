@@ -26,7 +26,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT [c].[AID], [c].[CID], [c].[Name], [c].[Level], [c].[Sex], [c].[XP], [c].[RegDate], [c].[LastTime], [c].[PlayTime], [c].[KillCount], [c].[DeathCount], [a].[UGradeID], [cl].[Name]
+	SELECT [c].[AID], [c].[CID], [c].[Name], [c].[Level], [c].[Sex], [c].[XP], [c].[RegDate], [c].[LastTime], [c].[PlayTime], [c].[KillCount], [c].[DeathCount], [a].[UGradeID], [cl].[Name] AS [ClanName]
 	FROM [dbo].[Character] (nolock) AS [c]
 	INNER JOIN [dbo].[Account] AS [a] ON [c].[AID] = [a].[AID]
 	LEFT OUTER JOIN [dbo].[ClanMember] AS [clm] ON [c].[CID] = [clm].[CID]
