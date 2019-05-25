@@ -9,6 +9,8 @@ namespace GunzCord.Database
 {
 	public interface IGunzRepository
 	{
+		Task<Character> GetCharacterByNameAsync(string name);
+
 		Task<IEnumerable<ServerStatus>> GetServerStatusAsync();
 	}
 }

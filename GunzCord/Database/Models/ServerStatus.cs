@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GunzCord.Database.Models
 {
@@ -10,10 +6,12 @@ namespace GunzCord.Database.Models
 	{
 		public int ServerID { get; set; }
 
-		public string Name { get; set; }
+		public string ServerName { get; set; }
 
-		public int CurPlayer { get; set; }
+		public int CurrPlayer { get; set; }
 
 		public int MaxPlayer { get; set; }
+
+		public DateTime? Time { get; set; }
 	}
 }

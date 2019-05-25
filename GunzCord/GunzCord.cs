@@ -1,7 +1,10 @@
-﻿using GunzCord.Database;
+﻿using GunzCord.Configuration;
+using GunzCord.Database;
 using GunzCord.DiscordClient;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,10 +19,13 @@ namespace GunzCord
 
 		public GunzCord(
 			IDatabaseService databaseService,
-			IDiscordService discordService)
+			IDiscordService discordService,
+			IOptions<AppConfiguration> appConfigurationOptions)
 		{
 			_databaseService = databaseService;
 			_discordService = discordService;
+
+			ConfigureLocale(appConfigurationOptions.Value.Locale);
 		}
 
 		public async Task StartAsync(CancellationToken cancellationToken = default)
@@ -33,7 +39,15 @@ namespace GunzCord
 		{
 			await _discordService.StopAsync(cancellationToken);
 			await _databaseService.StopAsync(cancellationToken);
+		}
 
+		private void ConfigureLocale(string locale)
+		{
+			if (!string.IsNullOrEmpty(locale))
+			{
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(locale);
+				Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(locale);
+			}
 		}
 	}
 }

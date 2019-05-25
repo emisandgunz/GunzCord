@@ -17,13 +17,26 @@ namespace GunzCord.Database
 			_databaseService = databaseService;
 		}
 
+		public async Task<Character> GetCharacterByNameAsync(string name)
+		{
+			Character result = null;
+
+			using (var transaction = _databaseService.Connection.BeginTransaction())
+			{
+				result = await _databaseService.Connection
+					.QueryFirstOrDefaultAsync<Character>("[dbo].[spDiscordGetCharInfoByName]", new { Name = name }, transaction: transaction, commandType: System.Data.CommandType.StoredProcedure);
+			}
+
+			return result;
+		}
+
 		public async Task<IEnumerable<ServerStatus>> GetServerStatusAsync()
 		{
 			IEnumerable<ServerStatus> result = null;
 
 			using (var transaction = _databaseService.Connection.BeginTransaction())
 			{
-				result = await _databaseService.Connection.QueryAsync<ServerStatus>("[dbo].[spGetServerStatus]", transaction: transaction, commandType: System.Data.CommandType.StoredProcedure);
+				result = await _databaseService.Connection.QueryAsync<ServerStatus>("[dbo].[spDiscordGetServerInfo]", transaction: transaction, commandType: System.Data.CommandType.StoredProcedure);
 			}
 
 			return result;

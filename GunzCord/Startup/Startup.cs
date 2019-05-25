@@ -26,6 +26,7 @@ namespace GunzCord.Startup
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.Configure<AppConfiguration>(Configuration.GetSection("App"));
 			services.Configure<DiscordConfiguration>(Configuration.GetSection("Discord"));
 			services.Configure<GunZConfiguration>(Configuration.GetSection("GunZ"));
 
@@ -45,7 +46,7 @@ namespace GunzCord.Startup
 			services.AddTransient<IGunzCordApplication, GunzCordApplication>();
 			services.AddTransient<GunzCord>();
 
-			services.AddTransient<StatusModule>();
+			services.AddTransient<GunzModule>();
 		}
 	}
 }
