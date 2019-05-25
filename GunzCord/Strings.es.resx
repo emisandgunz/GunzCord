@@ -156,6 +156,63 @@
   <data name="CHARACTER_XP" xml:space="preserve">
     <value>Exp</value>
   </data>
+  <data name="CLAN_DRAWS" xml:space="preserve">
+    <value>Empates</value>
+  </data>
+  <data name="CLAN_INFORMATION" xml:space="preserve">
+    <value>Información del Clan</value>
+  </data>
+  <data name="CLAN_INFORMATION_NOT_FOUND" xml:space="preserve">
+    <value>No se ha podido encontrar el clan "{0}"</value>
+  </data>
+  <data name="CLAN_LEADER" xml:space="preserve">
+    <value>Líder</value>
+  </data>
+  <data name="CLAN_LEADERBOARD" xml:space="preserve">
+    <value>Ranking de Clanes</value>
+  </data>
+  <data name="CLAN_LEADERBOARD_NO_DATA" xml:space="preserve">
+    <value>Por el momento no hay clanes con ranking, prueba otra vez mañana!</value>
+  </data>
+  <data name="CLAN_LOSSES" xml:space="preserve">
+    <value>Derrotas</value>
+  </data>
+  <data name="CLAN_POINTS" xml:space="preserve">
+    <value>Puntos</value>
+  </data>
+  <data name="CLAN_RANKING" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="CLAN_UNRANKED" xml:space="preserve">
+    <value>Sin clasificar</value>
+  </data>
+  <data name="CLAN_WINS" xml:space="preserve">
+    <value>Victorias</value>
+  </data>
+  <data name="COMMANDS_CHARACTER" xml:space="preserve">
+    <value>Muestra los datos del personaje.</value>
+  </data>
+  <data name="COMMANDS_CLAN" xml:space="preserve">
+    <value>Muestra los datos del clan.</value>
+  </data>
+  <data name="COMMANDS_CLANRANKING" xml:space="preserve">
+    <value>Muestra los mejores 5 clanes.</value>
+  </data>
+  <data name="COMMANDS_HELP" xml:space="preserve">
+    <value>Muestra este menú</value>
+  </data>
+  <data name="COMMANDS_NAME_PARAMETER" xml:space="preserve">
+    <value>nombre</value>
+  </data>
+  <data name="COMMANDS_ONLINE" xml:space="preserve">
+    <value>Muestra la cantidad de jugadores en línea.</value>
+  </data>
+  <data name="COMMANDS_SERVERINFO" xml:space="preserve">
+    <value>Muestra la lista de servidores.</value>
+  </data>
+  <data name="COMMANDS_TITLE" xml:space="preserve">
+    <value>Lista de Comandos</value>
+  </data>
   <data name="GRADE_ADMINISTRATOR" xml:space="preserve">
     <value>Administrador</value>
   </data>

@@ -30,6 +30,31 @@ namespace GunzCord.Database
 			return result;
 		}
 
+		public async Task<Clan> GetClanInfoByNameAsync(string name)
+		{
+			Clan result = null;
+
+			using (var transaction = _databaseService.Connection.BeginTransaction())
+			{
+				result = await _databaseService.Connection
+					.QueryFirstOrDefaultAsync<Clan>("[dbo].[spDiscordGetClanInfoByName]", new { Name = name }, transaction: transaction, commandType: System.Data.CommandType.StoredProcedure);
+			}
+
+			return result;
+		}
+
+		public async Task<IEnumerable<ClanRanking>> GetClanRankingAsync()
+		{
+			IEnumerable<ClanRanking> result = null;
+
+			using (var transaction = _databaseService.Connection.BeginTransaction())
+			{
+				result = await _databaseService.Connection.QueryAsync<ClanRanking>("[dbo].[spDiscordGetClanRanking]", transaction: transaction, commandType: System.Data.CommandType.StoredProcedure);
+			}
+
+			return result;
+		}
+
 		public async Task<IEnumerable<ServerStatus>> GetServerStatusAsync()
 		{
 			IEnumerable<ServerStatus> result = null;

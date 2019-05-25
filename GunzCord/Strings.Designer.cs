@@ -178,6 +178,177 @@ namespace GunzCord {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Draws.
+        /// </summary>
+        public static string CLAN_DRAWS {
+            get {
+                return ResourceManager.GetString("CLAN_DRAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clan Information.
+        /// </summary>
+        public static string CLAN_INFORMATION {
+            get {
+                return ResourceManager.GetString("CLAN_INFORMATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find the clan &quot;{0}&quot;.
+        /// </summary>
+        public static string CLAN_INFORMATION_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("CLAN_INFORMATION_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leader.
+        /// </summary>
+        public static string CLAN_LEADER {
+            get {
+                return ResourceManager.GetString("CLAN_LEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clan Leaderboard.
+        /// </summary>
+        public static string CLAN_LEADERBOARD {
+            get {
+                return ResourceManager.GetString("CLAN_LEADERBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is currently no clan leaderboard, check again tomorrow!.
+        /// </summary>
+        public static string CLAN_LEADERBOARD_NO_DATA {
+            get {
+                return ResourceManager.GetString("CLAN_LEADERBOARD_NO_DATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Losses.
+        /// </summary>
+        public static string CLAN_LOSSES {
+            get {
+                return ResourceManager.GetString("CLAN_LOSSES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        public static string CLAN_POINTS {
+            get {
+                return ResourceManager.GetString("CLAN_POINTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranking.
+        /// </summary>
+        public static string CLAN_RANKING {
+            get {
+                return ResourceManager.GetString("CLAN_RANKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unranked.
+        /// </summary>
+        public static string CLAN_UNRANKED {
+            get {
+                return ResourceManager.GetString("CLAN_UNRANKED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wins.
+        /// </summary>
+        public static string CLAN_WINS {
+            get {
+                return ResourceManager.GetString("CLAN_WINS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display character information..
+        /// </summary>
+        public static string COMMANDS_CHARACTER {
+            get {
+                return ResourceManager.GetString("COMMANDS_CHARACTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display clan information..
+        /// </summary>
+        public static string COMMANDS_CLAN {
+            get {
+                return ResourceManager.GetString("COMMANDS_CLAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display the top 5 clans..
+        /// </summary>
+        public static string COMMANDS_CLANRANKING {
+            get {
+                return ResourceManager.GetString("COMMANDS_CLANRANKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display this menu..
+        /// </summary>
+        public static string COMMANDS_HELP {
+            get {
+                return ResourceManager.GetString("COMMANDS_HELP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to name.
+        /// </summary>
+        public static string COMMANDS_NAME_PARAMETER {
+            get {
+                return ResourceManager.GetString("COMMANDS_NAME_PARAMETER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display the amount of players online in GunZ..
+        /// </summary>
+        public static string COMMANDS_ONLINE {
+            get {
+                return ResourceManager.GetString("COMMANDS_ONLINE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display the server list..
+        /// </summary>
+        public static string COMMANDS_SERVERINFO {
+            get {
+                return ResourceManager.GetString("COMMANDS_SERVERINFO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Commands.
+        /// </summary>
+        public static string COMMANDS_TITLE {
+            get {
+                return ResourceManager.GetString("COMMANDS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrator.
         /// </summary>
         public static string GRADE_ADMINISTRATOR {

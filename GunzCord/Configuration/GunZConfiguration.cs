@@ -10,6 +10,8 @@ namespace GunzCord.Configuration
 	{
 		public string DefaultClanEmblem { get; set; } = string.Empty;
 
+		public string EmblemBaseUrl { get; set; } = string.Empty;
+
 		public byte[] UGradeID_Admin { get; set; } = new byte[] { 255 };
 
 		public byte[] UGradeID_Banned { get; set; } = new byte[] { 253 };
