@@ -33,18 +33,18 @@ namespace GunzCord.Database
 		{
 			if (_connection == null)
 			{
-				_logger.LogInformation("[{0}] Starting database connection", DateTime.Now);
+				_logger.LogInformation("Starting database connection");
 
 				try
 				{
 					_connection = new SqlConnection(_connectionString);
 					await _connection.OpenAsync();
 
-					_logger.LogInformation("[{0}] Database connected successfully", DateTime.Now);
+					_logger.LogInformation("Database connected successfully");
 				}
 				catch (Exception ex)
 				{
-					_logger.LogError(ex, "[{0}] Unable to connect to database", DateTime.Now);
+					_logger.LogError(ex, "Unable to connect to database");
 					throw ex;
 				}
 			}
@@ -58,7 +58,7 @@ namespace GunzCord.Database
 		{
 			if (_connection != null)
 			{
-				_logger.LogInformation("[{0}] Closing database connection", DateTime.Now);
+				_logger.LogInformation("Closing database connection");
 
 				try
 				{
@@ -67,11 +67,11 @@ namespace GunzCord.Database
 						_connection.Close();
 					}
 
-					_logger.LogInformation("[{0}] Database connection closed successfully", DateTime.Now);
+					_logger.LogInformation("Database connection closed successfully");
 				}
 				catch (Exception ex)
 				{
-					_logger.LogError(ex, "[{0}] Unable to close database connection", DateTime.Now);
+					_logger.LogError(ex, "Unable to close database connection");
 					throw ex;
 				}
 			}

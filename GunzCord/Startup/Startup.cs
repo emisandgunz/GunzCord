@@ -32,8 +32,8 @@ namespace GunzCord.Startup
 
 			services.AddLogging(configure =>
 			{
-				configure.AddConsole();
-				configure.AddDebug();
+				configure.AddLog4Net("log4net.config", true);
+				configure.SetMinimumLevel(LogLevel.Debug);
 			});
 
 			services.AddSingleton(Configuration);

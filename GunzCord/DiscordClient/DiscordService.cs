@@ -102,15 +102,31 @@ namespace GunzCord.DiscordClient
 
 		public async Task StartAsync(CancellationToken token = default)
 		{
-			await InstallCommandsAsync();
+			try
+			{
+				await InstallCommandsAsync();
 
-			await _client.LoginAsync(TokenType.Bot, _discordConfiguration.Token);
-			await _client.StartAsync();
+				await _client.LoginAsync(TokenType.Bot, _discordConfiguration.Token);
+				await _client.StartAsync();
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Unable to connect to Discord");
+				throw ex;
+			}
 		}
 
 		public async Task StopAsync(CancellationToken token = default)
 		{
-			await _client.StopAsync();
+			try
+			{
+				await _client.StopAsync();
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Unable to disconnect from Discord");
+				throw ex;
+			}
 		}
 
 		private Task OnDiscordLog(LogMessage arg)

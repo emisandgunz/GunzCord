@@ -88,6 +88,8 @@ namespace GunzCord.DiscordClient.Commands
 			}
 			else
 			{
+				_logger.LogWarning("Unable to find a character with name \"{0}\"", name);
+
 				embed = new EmbedBuilder()
 				{
 					Color = Color.Red,
@@ -141,6 +143,8 @@ namespace GunzCord.DiscordClient.Commands
 			}
 			else
 			{
+				_logger.LogWarning("Unable to find a clan with name \"{0}\"", name);
+
 				embed = new EmbedBuilder()
 				{
 					Color = Color.Red,
@@ -299,7 +303,7 @@ namespace GunzCord.DiscordClient.Commands
 
 		private void LogMessage()
 		{
-			_logger.LogInformation("[{0}] {0}: {1}", DateTime.Now, Context.Message.Author, Context.Message.Content);
+			_logger.LogInformation("{0}: {1}", Context.Message.Author, Context.Message.Content);
 		}
 	}
 }
