@@ -36,6 +36,10 @@ Check Discord documentation on how to get the server and channel ids here: https
 
 Configure `EmblemBaseUrl` with the URL prefix for your clan emblems, it's the same you set up at system.xml in your Gunz client.
 
+Currently localizations for English and Spanish are provided with the application.
+To specify the localization, modify the `locale` property to `en-US` for English and to `es` for Spanish.
+If you want to add another localization, create a Strings.{locale}.resx with your localization and submit a pull request.
+
 There are other settings at appsettings.json you can play with.
 
 ### Install the Stored Procedures in your Gunz database
