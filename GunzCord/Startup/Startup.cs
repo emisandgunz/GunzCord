@@ -39,13 +39,13 @@ namespace GunzCord.Startup
 			services.AddSingleton(Configuration);
 			
 			services.AddSingleton<IDatabaseService, SqlDatabaseService>();
-			services.AddTransient<IDiscordService, DiscordService>();
-			services.AddTransient<IGunzRepository, GunzRepository>();
-
+			services.AddSingleton<IDiscordService, DiscordService>();
+			services.AddSingleton<IClanWarNotificationService, ClanWarNotificationService>();
 			services.AddSingleton<IApplicationLifetime, ApplicationLifetime>();
+
+			services.AddTransient<IGunzRepository, GunzRepository>();
 			services.AddTransient<IGunzCordApplication, GunzCordApplication>();
 			services.AddTransient<GunzCord>();
-
 			services.AddTransient<GunzModule>();
 		}
 	}

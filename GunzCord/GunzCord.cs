@@ -1,4 +1,5 @@
-﻿using GunzCord.Configuration;
+﻿using GunzCord.Application;
+using GunzCord.Configuration;
 using GunzCord.Database;
 using GunzCord.DiscordClient;
 using Microsoft.Extensions.Options;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GunzCord
 {
-	public class GunzCord
+	public class GunzCord : IApplicationService
 	{
 		private readonly IDatabaseService _databaseService;
 		private readonly IDiscordService _discordService;

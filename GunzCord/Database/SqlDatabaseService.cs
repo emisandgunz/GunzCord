@@ -10,9 +10,7 @@ namespace GunzCord.Database
 {
 	public class SqlDatabaseService : IDatabaseService
 	{
-		private readonly string _connectionString;
 		private readonly ILogger _logger;
-
 		private SqlConnection _connection;
 
 		public IDbConnection Connection
@@ -23,9 +21,11 @@ namespace GunzCord.Database
 			}
 		}
 
+		public string ConnectionString { get; protected set; }
+
 		public SqlDatabaseService(IConfigurationRoot configuration, ILogger<SqlDatabaseService> logger)
 		{
-			_connectionString = configuration.GetConnectionString("GunzDB");
+			ConnectionString = configuration.GetConnectionString("GunzDB");
 			_logger = logger;
 		}
 
@@ -37,7 +37,7 @@ namespace GunzCord.Database
 
 				try
 				{
-					_connection = new SqlConnection(_connectionString);
+					_connection = new SqlConnection(ConnectionString);
 					await _connection.OpenAsync();
 
 					_logger.LogInformation("Database connected successfully");

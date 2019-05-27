@@ -268,6 +268,15 @@ namespace GunzCord {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clan &apos;{0}&apos; has defeated clan &apos;{1}&apos;.
+        /// </summary>
+        public static string CLAN_WAR_NOTIFICATION_MESSAGE {
+            get {
+                return ResourceManager.GetString("CLAN_WAR_NOTIFICATION_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wins.
         /// </summary>
         public static string CLAN_WINS {

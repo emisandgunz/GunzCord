@@ -186,6 +186,9 @@
   <data name="CLAN_UNRANKED" xml:space="preserve">
     <value>Sin clasificar</value>
   </data>
+  <data name="CLAN_WAR_NOTIFICATION_MESSAGE" xml:space="preserve">
+    <value>El clan '{0}' ha vencido al clan '{1}'</value>
+  </data>
   <data name="CLAN_WINS" xml:space="preserve">
     <value>Victorias</value>
   </data>

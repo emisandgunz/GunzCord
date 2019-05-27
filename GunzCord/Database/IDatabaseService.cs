@@ -9,5 +9,7 @@ namespace GunzCord.Database
 	public interface IDatabaseService : IApplicationService, IDisposable
 	{
 		IDbConnection Connection { get; }
+
+		string ConnectionString { get; }
 	}
 }

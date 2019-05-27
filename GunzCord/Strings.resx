@@ -186,6 +186,9 @@
   <data name="CLAN_UNRANKED" xml:space="preserve">
     <value>Unranked</value>
   </data>
+  <data name="CLAN_WAR_NOTIFICATION_MESSAGE" xml:space="preserve">
+    <value>Clan '{0}' has defeated clan '{1}'</value>
+  </data>
   <data name="CLAN_WINS" xml:space="preserve">
     <value>Wins</value>
   </data>

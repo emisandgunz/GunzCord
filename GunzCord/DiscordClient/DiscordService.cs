@@ -3,14 +3,11 @@ using Discord.Commands;
 using Discord.WebSocket;
 using GunzCord.Configuration;
 using GunzCord.Database;
-using Microsoft.Extensions.DependencyInjection;
+using GunzCord.Database.Events;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,15 +15,21 @@ namespace GunzCord.DiscordClient
 {
 	public class DiscordService : IDiscordService
 	{
+		private readonly IClanWarNotificationService _clanWarNotificationService;
 		private readonly DiscordSocketClient _client;
 		private readonly CommandService _commands;
 		private readonly DiscordConfiguration _discordConfiguration;
 		private readonly ILogger<DiscordService> _logger;
 		private readonly IServiceProvider _serviceProvider;
 
-		public DiscordService(IOptions<DiscordConfiguration> discordConfigurationOptions, ILogger<DiscordService> logger, IServiceProvider serviceProvider)
+		public DiscordService(
+			IOptions<DiscordConfiguration> discordConfigurationOptions,
+			IClanWarNotificationService clanWarNotificationService,
+			ILogger<DiscordService> logger,
+			IServiceProvider serviceProvider)
 		{
 			_discordConfiguration = discordConfigurationOptions.Value;
+			_clanWarNotificationService = clanWarNotificationService;
 			_logger = logger;
 			_serviceProvider = serviceProvider;
 
@@ -48,20 +51,64 @@ namespace GunzCord.DiscordClient
 			}
 		}
 
-		public async Task InstallCommandsAsync()
+		public async Task StartAsync(CancellationToken token = default)
 		{
-			// Hook the MessageReceived event into our command handler
-			_client.MessageReceived += HandleCommandAsync;
+			try
+			{
+				await InstallCommandsAsync();
 
-			// Here we discover all of the command modules in the entry 
-			// assembly and load them. Starting from Discord.NET 2.0, a
-			// service provider is required to be passed into the
-			// module registration method to inject the 
-			// required dependencies.
-			//
-			// If you do not use Dependency Injection, pass null.
-			// See Dependency Injection guide for more information.
-			await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: _serviceProvider);
+				await _client.LoginAsync(TokenType.Bot, _discordConfiguration.Token);
+				await _client.StartAsync();
+
+				if (_discordConfiguration.EnableClanWarNotifications)
+				{
+					if (_discordConfiguration.ServerId > 0 && _discordConfiguration.NotificationsChannelId > 0)
+					{
+						_clanWarNotificationService.OnClanWarNotification += OnClanWarNotificationAsync;
+
+						await _clanWarNotificationService.StartAsync(token);
+					}
+					else if (_discordConfiguration.ServerId <= 0)
+					{
+						_logger.LogWarning("Discord Server ID is not configured, clan war notifications will not be sent");
+					}
+					else
+					{
+						_logger.LogWarning("Notifications Channel ID is not configured, clan war notifications will not be sent");
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Unable to connect to Discord");
+				throw ex;
+			}
+		}
+
+		public async Task StopAsync(CancellationToken token = default)
+		{
+			try
+			{
+				if (_discordConfiguration.EnableClanWarNotifications)
+				{
+					await _clanWarNotificationService.StopAsync(token);
+				}
+
+				await _client.StopAsync();
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Unable to disconnect from Discord");
+				throw ex;
+			}
+		}
+
+		public void Dispose()
+		{
+			if (_client != null)
+			{
+				_client.Dispose();
+			}
 		}
 
 		private async Task HandleCommandAsync(SocketMessage messageParam)
@@ -100,32 +147,52 @@ namespace GunzCord.DiscordClient
 			// await context.Channel.SendMessageAsync(result.ErrorReason);
 		}
 
-		public async Task StartAsync(CancellationToken token = default)
+		private async Task InstallCommandsAsync()
 		{
-			try
-			{
-				await InstallCommandsAsync();
+			// Hook the MessageReceived event into our command handler
+			_client.MessageReceived += HandleCommandAsync;
 
-				await _client.LoginAsync(TokenType.Bot, _discordConfiguration.Token);
-				await _client.StartAsync();
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Unable to connect to Discord");
-				throw ex;
-			}
+			// Here we discover all of the command modules in the entry 
+			// assembly and load them. Starting from Discord.NET 2.0, a
+			// service provider is required to be passed into the
+			// module registration method to inject the 
+			// required dependencies.
+			//
+			// If you do not use Dependency Injection, pass null.
+			// See Dependency Injection guide for more information.
+			await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: _serviceProvider);
 		}
 
-		public async Task StopAsync(CancellationToken token = default)
+		private async Task OnClanWarNotificationAsync(object sender, ClanWarNotificationEventArgs e)
 		{
-			try
+			if (_discordConfiguration.NotificationsChannelId > 0)
 			{
-				await _client.StopAsync();
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError(ex, "Unable to disconnect from Discord");
-				throw ex;
+				var guild = _client.GetGuild(_discordConfiguration.ServerId);
+
+				if (guild != null)
+				{
+					var notificationsChannel = guild.GetTextChannel(_discordConfiguration.NotificationsChannelId);
+
+					if (notificationsChannel != null)
+					{
+						try
+						{
+							await notificationsChannel.SendMessageAsync(string.Format(Strings.CLAN_WAR_NOTIFICATION_MESSAGE, e.ClanGameLog.WinnerClanName, e.ClanGameLog.LoserClanName));
+						}
+						catch (Exception ex)
+						{
+							_logger.LogError(ex, "Could not send a Clan War notification message");
+						}
+					}
+					else
+					{
+						_logger.LogError("Could not find a Discord Channel for Notifications with the configured ID");
+					}
+				}
+				else
+				{
+					_logger.LogError("Could not find a Discord Server with the configured ID");
+				}
 			}
 		}
 
