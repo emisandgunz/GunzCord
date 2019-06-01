@@ -11,6 +11,8 @@ namespace GunzCord.Database
 	{
 		Task<Character> GetCharacterByNameAsync(string name);
 
+		Task<Clan> GetClanInfoByCLIDAsync(int clid);
+
 		Task<Clan> GetClanInfoByNameAsync(string name);
 
 		Task<IEnumerable<ClanRanking>> GetClanRankingAsync();

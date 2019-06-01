@@ -241,6 +241,33 @@ namespace GunzCord {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Players.
+        /// </summary>
+        public static string CLAN_NAME_PLAYERS {
+            get {
+                return ResourceManager.GetString("CLAN_NAME_PLAYERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Points.
+        /// </summary>
+        public static string CLAN_NAME_POINTS {
+            get {
+                return ResourceManager.GetString("CLAN_NAME_POINTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Ranking.
+        /// </summary>
+        public static string CLAN_NAME_RANKING {
+            get {
+                return ResourceManager.GetString("CLAN_NAME_RANKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Points.
         /// </summary>
         public static string CLAN_POINTS {
@@ -255,6 +282,24 @@ namespace GunzCord {
         public static string CLAN_RANKING {
             get {
                 return ResourceManager.GetString("CLAN_RANKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round Losses.
+        /// </summary>
+        public static string CLAN_ROUND_LOSSES {
+            get {
+                return ResourceManager.GetString("CLAN_ROUND_LOSSES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round Wins.
+        /// </summary>
+        public static string CLAN_ROUND_WINS {
+            get {
+                return ResourceManager.GetString("CLAN_ROUND_WINS", resourceCulture);
             }
         }
         

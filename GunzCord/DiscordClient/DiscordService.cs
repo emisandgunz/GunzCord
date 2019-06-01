@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using GunzCord.Configuration;
 using GunzCord.Database;
 using GunzCord.Database.Events;
+using GunzCord.Database.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -19,17 +20,23 @@ namespace GunzCord.DiscordClient
 		private readonly DiscordSocketClient _client;
 		private readonly CommandService _commands;
 		private readonly DiscordConfiguration _discordConfiguration;
+		private readonly GunZConfiguration _gunzConfiguration;
+		private readonly IGunzRepository _gunzRepository;
 		private readonly ILogger<DiscordService> _logger;
 		private readonly IServiceProvider _serviceProvider;
 
 		public DiscordService(
 			IOptions<DiscordConfiguration> discordConfigurationOptions,
+			IOptions<GunZConfiguration> gunzConfigurationOptions,
 			IClanWarNotificationService clanWarNotificationService,
+			IGunzRepository gunzRepository,
 			ILogger<DiscordService> logger,
 			IServiceProvider serviceProvider)
 		{
 			_discordConfiguration = discordConfigurationOptions.Value;
+			_gunzConfiguration = gunzConfigurationOptions.Value;
 			_clanWarNotificationService = clanWarNotificationService;
+			_gunzRepository = gunzRepository;
 			_logger = logger;
 			_serviceProvider = serviceProvider;
 
@@ -179,7 +186,56 @@ namespace GunzCord.DiscordClient
 					{
 						try
 						{
-							await notificationsChannel.SendMessageAsync(string.Format(Strings.CLAN_WAR_NOTIFICATION_MESSAGE, e.ClanGameLog.WinnerClanName, e.ClanGameLog.LoserClanName));
+							if (!_discordConfiguration.ShowClanWarNotificationsWithEmbed)
+							{
+								await notificationsChannel.SendMessageAsync(string.Format(Strings.CLAN_WAR_NOTIFICATION_MESSAGE, e.ClanGameLog.WinnerClanName, e.ClanGameLog.LoserClanName));
+							}
+							else
+							{
+								Clan winnerClan = await _gunzRepository.GetClanInfoByCLIDAsync(e.ClanGameLog.WinnerCLID);
+								Clan loserClan = await _gunzRepository.GetClanInfoByCLIDAsync(e.ClanGameLog.LoserCLID);
+
+								EmbedBuilder embed = null;
+
+								if (winnerClan != null && loserClan != null)
+								{
+									string emblemUrl = _gunzConfiguration.DefaultClanEmblem;
+
+									if (!string.IsNullOrEmpty(winnerClan.EmblemUrl))
+									{
+										emblemUrl = _gunzConfiguration.EmblemBaseUrl.EnsureEndsWith('/') + winnerClan.EmblemUrl;
+									}
+
+									embed = new EmbedBuilder()
+									{
+										Color = Color.Blue,
+										Title = string.Format(Strings.CLAN_WAR_NOTIFICATION_MESSAGE, e.ClanGameLog.WinnerClanName, e.ClanGameLog.LoserClanName),
+										ThumbnailUrl = emblemUrl,
+										Timestamp = DateTime.UtcNow
+									};
+
+									embed.AddField(
+										string.Format(Strings.CLAN_NAME_RANKING, e.ClanGameLog.WinnerClanName), 
+										string.Format("{0} ({1} {2})", winnerClan.Ranking > 0 ? winnerClan.Ranking.ToString() : Strings.CLAN_UNRANKED, winnerClan.Point, Strings.CLAN_POINTS), 
+										true);
+
+									embed.AddField(
+										string.Format(Strings.CLAN_NAME_RANKING, e.ClanGameLog.LoserClanName),
+										string.Format("{0} ({1} {2})", loserClan.Ranking > 0 ? loserClan.Ranking.ToString() : Strings.CLAN_UNRANKED, loserClan.Point, Strings.CLAN_POINTS),
+										true);
+
+									embed.AddField(string.Format(Strings.CLAN_NAME_PLAYERS, e.ClanGameLog.WinnerClanName), e.ClanGameLog.WinnerMembers, true);
+									embed.AddField(string.Format(Strings.CLAN_NAME_PLAYERS, e.ClanGameLog.LoserClanName), e.ClanGameLog.LoserMembers, true);
+									embed.AddField(Strings.CLAN_ROUND_WINS, e.ClanGameLog.RoundWins, true);
+									embed.AddField(Strings.CLAN_ROUND_LOSSES, e.ClanGameLog.RoundLosses, true);
+
+									await notificationsChannel.SendMessageAsync(embed: embed.Build());
+								}
+								else
+								{
+									await notificationsChannel.SendMessageAsync(string.Format(Strings.CLAN_WAR_NOTIFICATION_MESSAGE, e.ClanGameLog.WinnerClanName, e.ClanGameLog.LoserClanName));
+								}
+							}
 						}
 						catch (Exception ex)
 						{

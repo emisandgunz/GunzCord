@@ -177,11 +177,26 @@
   <data name="CLAN_LOSSES" xml:space="preserve">
     <value>Derrotas</value>
   </data>
+  <data name="CLAN_NAME_PLAYERS" xml:space="preserve">
+    <value>Jugadores en {0}</value>
+  </data>
+  <data name="CLAN_NAME_POINTS" xml:space="preserve">
+    <value>Puntos de {0}</value>
+  </data>
+  <data name="CLAN_NAME_RANKING" xml:space="preserve">
+    <value>Ranking de {0}</value>
+  </data>
   <data name="CLAN_POINTS" xml:space="preserve">
     <value>Puntos</value>
   </data>
   <data name="CLAN_RANKING" xml:space="preserve">
     <value>Ranking</value>
+  </data>
+  <data name="CLAN_ROUND_LOSSES" xml:space="preserve">
+    <value>Rounds Perdidos</value>
+  </data>
+  <data name="CLAN_ROUND_WINS" xml:space="preserve">
+    <value>Rounds Ganados</value>
   </data>
   <data name="CLAN_UNRANKED" xml:space="preserve">
     <value>Sin clasificar</value>

@@ -36,6 +36,21 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [dbo].[spDiscordGetClanInfoByCLID]
+	@CLID INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT [cl].[CLID], [cl].[Name], [cl].[MasterCID], [cl].[Point], [cl].[Wins], [cl].[RegDate], [cl].[Losses], [cl].[Draws], [cl].[Ranking], [cl].[EmblemUrl], [c].[Name] AS [Leader]
+	FROM [dbo].[Clan] (nolock) AS [cl]
+	INNER JOIN [dbo].[Character] AS [c] ON [cl].[MasterCID] = [c].[CID]
+	WHERE [cl].[CLID] = @CLID 
+		AND ([cl].[DeleteFlag] = 0 OR [cl].[DeleteFlag] IS NULL) 
+		AND ([c].[DeleteFlag] = 0 OR [c].[DeleteFlag] IS NULL)
+END
+GO
+
 CREATE PROCEDURE [dbo].[spDiscordGetClanInfoByName]
 	@Name VARCHAR(24)
 AS

@@ -12,6 +12,8 @@ namespace GunzCord.Database.Models
 
 		public int LoserCLID { get; set; }
 
+		public string LoserMembers { get; set; }
+
 		public int LoserPoint { get; set; }
 
 		public byte MapID { get; set; }
@@ -22,7 +24,7 @@ namespace GunzCord.Database.Models
 
 		public byte RoundWins { get; set; }
 
-		public string WinnerClanName{ get; set; }
+		public string WinnerClanName { get; set; }
 
 		public int WinnerCLID { get; set; }
 

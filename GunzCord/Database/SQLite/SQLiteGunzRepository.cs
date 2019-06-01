@@ -38,6 +38,25 @@ namespace GunzCord.Database.SQLite
 			return result;
 		}
 
+		public async Task<Clan> GetClanInfoByCLIDAsync(int clid)
+		{
+			Clan result = null;
+
+			using (var transaction = _databaseService.Connection.BeginTransaction())
+			{
+				result = await _databaseService.Connection
+					.QueryFirstOrDefaultAsync<Clan>(
+					"SELECT [cl].[CLID], [cl].[Name], [cl].[MasterCID], [cl].[Point], [cl].[Wins], [cl].[RegDate], [cl].[Losses], [cl].[Draws], [cl].[Ranking], [cl].[EmblemUrl], [c].[Name] AS [Leader] " +
+					"FROM 'Clan' AS [cl] " +
+					"INNER JOIN 'Character' AS [c] ON [cl].[MasterCID] = [c].[CID] " +
+					"WHERE [cl].[CLID] = @CLID) AND ([cl].[DeleteFlag] = 0 OR [cl].[DeleteFlag] IS NULL) AND ([c].[DeleteFlag] = 0 OR [c].[DeleteFlag] IS NULL)",
+					new { CLID = clid },
+					transaction: transaction);
+			}
+
+			return result;
+		}
+
 		public async Task<Clan> GetClanInfoByNameAsync(string name)
 		{
 			Clan result = null;

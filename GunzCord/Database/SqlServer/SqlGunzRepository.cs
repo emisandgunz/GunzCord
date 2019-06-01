@@ -27,6 +27,19 @@ namespace GunzCord.Database.SqlServer
 			return result;
 		}
 
+		public async Task<Clan> GetClanInfoByCLIDAsync(int clid)
+		{
+			Clan result = null;
+
+			using (var transaction = _databaseService.Connection.BeginTransaction())
+			{
+				result = await _databaseService.Connection
+					.QueryFirstOrDefaultAsync<Clan>("[dbo].[spDiscordGetClanInfoByCLID]", new { CLID = clid }, transaction: transaction, commandType: System.Data.CommandType.StoredProcedure);
+			}
+
+			return result;
+		}
+
 		public async Task<Clan> GetClanInfoByNameAsync(string name)
 		{
 			Clan result = null;

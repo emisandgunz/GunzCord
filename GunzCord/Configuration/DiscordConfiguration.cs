@@ -14,6 +14,8 @@
 
 		public ulong? ServerId { get; set; }
 
+		public bool ShowClanWarNotificationsWithEmbed { get; set; } = false;
+
 		public string Token { get; set; } = string.Empty;
 	}
 }
