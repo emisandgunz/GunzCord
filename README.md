@@ -11,8 +11,11 @@ It provides commands that retrieve information from your GunZ server
 - !server - Display the GunZ server list and online players on each server
 - !online - Display the online player count
   
+Please nothe that the !server and !online commands are only available for Microsoft SQL Server Databases and not for SQLite3 Databases.
+  
 ### Notifications:
-GunzCord also includes Clan War notifications, a message will be sent to a specific channel every time Clan War match ends
+GunzCord also includes Clan War notifications, a message will be sent to a specific channel every time Clan War match ends.
+This feature is only available for Microsoft SQL Server Databases
 
 ## Setup
 ### Create Discord Application and Bot
@@ -26,6 +29,12 @@ https://discord.foxbot.me/stable/guides/getting_started/first-bot.html
 ### Configure appsettings.json
 Configure the Connection String to match with your Database's Name, User and Password.
 It's recommended to set the `db_owner` role to your SQL user unless you know exactly which permission to grant
+
+If you are using a SQLite3 Database:
+- Comment the Microsoft SQL Server connection string
+- Uncomment and Configure the SQLite3 connection string
+- Change the `DatabaseType` setting to `SQLITE`
+- Change the `EnableClanWarNotifications` setting to `false`
 
 Configure the `Token` setting with the Bot token you generated when the Discord app was created.
 
@@ -42,10 +51,10 @@ If you want to add another localization, create a Strings.{locale}.resx with you
 
 There are other settings at appsettings.json you can play with.
 
-### Install the Stored Procedures in your Gunz database
+### Install the Stored Procedures in your Gunz database (Microsoft SQL Server Only)
 Excecute the install.sql script provided with GunzCord to install all the required stored procedures in your Gunz Database
 
-### Optional: Enable Service Broker in your Gunz database
+### Optional: Enable Service Broker in your Gunz database (Microsoft SQL Server Only)
 If you want to use Clan War notifications, you must enable the Service Broker for them to work.
 To enable the Service Broker execute the following SQL statement in your Gunz Database:
 
