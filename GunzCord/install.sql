@@ -2,6 +2,10 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = OBJECT_ID(N'[dbo].[spDiscordGetCh
 DROP PROCEDURE [dbo].[spDiscordGetCharInfoByName]
 GO
 
+IF EXISTS (SELECT * FROM sysobjects WHERE id = OBJECT_ID(N'[dbo].[spDiscordGetClanInfoByCLID]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[spDiscordGetClanInfoByCLID]
+GO
+
 IF EXISTS (SELECT * FROM sysobjects WHERE id = OBJECT_ID(N'[dbo].[spDiscordGetClanInfoByName]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
 DROP PROCEDURE [dbo].[spDiscordGetClanInfoByName]
 GO
