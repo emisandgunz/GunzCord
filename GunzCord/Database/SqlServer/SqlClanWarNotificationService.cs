@@ -8,17 +8,17 @@ using TableDependency.SqlClient.Base;
 using TableDependency.SqlClient.Base.Enums;
 using TableDependency.SqlClient.Base.EventArgs;
 
-namespace GunzCord.Database
+namespace GunzCord.Database.SqlServer
 {
-	public class ClanWarNotificationService : IClanWarNotificationService
+	public class SqlClanWarNotificationService : IClanWarNotificationService
 	{
 		private readonly IDatabaseService _databaseService;
-		private readonly ILogger<ClanWarNotificationService> _logger;
+		private readonly ILogger<SqlClanWarNotificationService> _logger;
 		private SqlTableDependency<ClanGameLog> _clanGameLogDependency;
 
 		public event ClanWarNotificationEventHandlerAsync OnClanWarNotification;
 
-		public ClanWarNotificationService(IDatabaseService databaseService, ILogger<ClanWarNotificationService> logger)
+		public SqlClanWarNotificationService(IDatabaseService databaseService, ILogger<SqlClanWarNotificationService> logger)
 		{
 			_databaseService = databaseService;
 			_logger = logger;

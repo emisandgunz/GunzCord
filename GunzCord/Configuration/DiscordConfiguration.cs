@@ -10,9 +10,9 @@
 
 		public string FooterSignature { get; set; } = "GunzCord";
 
-		public ulong NotificationsChannelId { get; set; } = 0;
+		public ulong? NotificationsChannelId { get; set; }
 
-		public ulong ServerId { get; set; } = 0;
+		public ulong? ServerId { get; set; }
 
 		public string Token { get; set; } = string.Empty;
 	}

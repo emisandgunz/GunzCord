@@ -1,18 +1,15 @@
 ﻿using Dapper;
 using GunzCord.Database.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace GunzCord.Database
+namespace GunzCord.Database.SqlServer
 {
-	public class GunzRepository : IGunzRepository
+	public class SqlGunzRepository : IGunzRepository
 	{
 		private readonly IDatabaseService _databaseService;
 
-		public GunzRepository(IDatabaseService databaseService)
+		public SqlGunzRepository(IDatabaseService databaseService)
 		{
 			_databaseService = databaseService;
 		}

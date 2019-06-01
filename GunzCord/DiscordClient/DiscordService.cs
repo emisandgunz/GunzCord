@@ -165,13 +165,15 @@ namespace GunzCord.DiscordClient
 
 		private async Task OnClanWarNotificationAsync(object sender, ClanWarNotificationEventArgs e)
 		{
-			if (_discordConfiguration.NotificationsChannelId > 0)
+			if (_discordConfiguration.ServerId.HasValue 
+				&& _discordConfiguration.NotificationsChannelId.HasValue 
+				&& _discordConfiguration.NotificationsChannelId > 0)
 			{
-				var guild = _client.GetGuild(_discordConfiguration.ServerId);
+				var guild = _client.GetGuild(_discordConfiguration.ServerId.Value);
 
 				if (guild != null)
 				{
-					var notificationsChannel = guild.GetTextChannel(_discordConfiguration.NotificationsChannelId);
+					var notificationsChannel = guild.GetTextChannel(_discordConfiguration.NotificationsChannelId.Value);
 
 					if (notificationsChannel != null)
 					{

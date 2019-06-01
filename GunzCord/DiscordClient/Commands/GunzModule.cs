@@ -15,6 +15,7 @@ namespace GunzCord.DiscordClient.Commands
 {
 	public class GunzModule : ModuleBase<SocketCommandContext>
 	{
+		private readonly AppConfiguration _appConfiguration;
 		private readonly DiscordConfiguration _discordConfiguration;
 		private readonly GunZConfiguration _gunzConfiguration;
 		private readonly IGunzRepository _gunzRepository;
@@ -22,11 +23,13 @@ namespace GunzCord.DiscordClient.Commands
 
 		public GunzModule(
 			IGunzRepository gunzRepository, 
+			IOptions<AppConfiguration> appConfigurationOptions,
 			IOptions<DiscordConfiguration> discordConfigurationOptions,
 			IOptions<GunZConfiguration> gunzConfigurationOptions,
 			ILogger<GunzModule> logger)
 		{
 			_gunzRepository = gunzRepository;
+			_appConfiguration = appConfigurationOptions.Value;
 			_discordConfiguration = discordConfigurationOptions.Value;
 			_gunzConfiguration = gunzConfigurationOptions.Value;
 			_logger = logger;
@@ -218,8 +221,12 @@ namespace GunzCord.DiscordClient.Commands
 			responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }char <{ Strings.COMMANDS_NAME_PARAMETER }>** - { Strings.COMMANDS_CHARACTER }");
 			responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }clan <{ Strings.COMMANDS_NAME_PARAMETER }>** - { Strings.COMMANDS_CLAN }");
 			responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }clanranking** - { Strings.COMMANDS_CLANRANKING }");
-			responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }server** - { Strings.COMMANDS_SERVERINFO }");
-			responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }online** - { Strings.COMMANDS_ONLINE }");
+
+			if (_appConfiguration.DatabaseType == DatabaseTypes.MICROSOFT_SQL_SERVER)
+			{
+				responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }server** - { Strings.COMMANDS_SERVERINFO }");
+				responseBuilder.AppendLine($"**{ _discordConfiguration.CommandPrefix }online** - { Strings.COMMANDS_ONLINE }");
+			}
 
 			await ReplyAsync(responseBuilder.ToString());
 		}
@@ -230,6 +237,11 @@ namespace GunzCord.DiscordClient.Commands
 		public async Task OnlineAsync()
 		{
 			LogMessage();
+
+			if (_appConfiguration.DatabaseType != DatabaseTypes.MICROSOFT_SQL_SERVER)
+			{
+				return;
+			}
 
 			await Context.Channel.TriggerTypingAsync();
 
@@ -251,6 +263,11 @@ namespace GunzCord.DiscordClient.Commands
 		public async Task ServerInfoAsync()
 		{
 			LogMessage();
+
+			if (_appConfiguration.DatabaseType != DatabaseTypes.MICROSOFT_SQL_SERVER)
+			{
+				return;
+			}
 
 			await Context.Channel.TriggerTypingAsync();
 

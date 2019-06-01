@@ -1,12 +1,15 @@
 ﻿using GunzCord.Application;
 using GunzCord.Configuration;
 using GunzCord.Database;
+using GunzCord.Database.SQLite;
+using GunzCord.Database.SqlServer;
 using GunzCord.DiscordClient;
 using GunzCord.DiscordClient.Commands;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 
 namespace GunzCord.Startup
@@ -37,13 +40,27 @@ namespace GunzCord.Startup
 			});
 
 			services.AddSingleton(Configuration);
-			
-			services.AddSingleton<IDatabaseService, SqlDatabaseService>();
-			services.AddSingleton<IDiscordService, DiscordService>();
-			services.AddSingleton<IClanWarNotificationService, ClanWarNotificationService>();
-			services.AddSingleton<IApplicationLifetime, ApplicationLifetime>();
 
-			services.AddTransient<IGunzRepository, GunzRepository>();
+			string databaseType = Configuration["App:DatabaseType"];
+
+			if (!string.IsNullOrEmpty(databaseType) && databaseType.Equals(DatabaseTypes.SQLITE3, StringComparison.OrdinalIgnoreCase))
+			{
+				services.AddSingleton<IDatabaseService, SQLiteDatabaseService>();
+				services.AddSingleton<IClanWarNotificationService, SQLiteClanWarNotificationService>();
+
+				services.AddTransient<IGunzRepository, SQLiteGunzRepository>();
+			}
+			else
+			{
+				services.AddSingleton<IDatabaseService, SqlDatabaseService>();
+				services.AddSingleton<IClanWarNotificationService, SqlClanWarNotificationService>();
+
+				services.AddTransient<IGunzRepository, SqlGunzRepository>();
+			}
+
+			services.AddSingleton<IDiscordService, DiscordService>();
+			services.AddSingleton<IApplicationLifetime, ApplicationLifetime>();
+			
 			services.AddTransient<IGunzCordApplication, GunzCordApplication>();
 			services.AddTransient<GunzCord>();
 			services.AddTransient<GunzModule>();

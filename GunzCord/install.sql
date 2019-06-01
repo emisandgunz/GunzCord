@@ -56,8 +56,8 @@ AS
 BEGIN
 	SELECT TOP 5 [cl].[CLID], [cl].[Name], [cl].[Point] 
 	FROM [dbo].[Clan] (nolock) AS [cl]
-    WHERE ([cl].[DeleteFlag] = 0 OR [cl].[DeleteFlag] IS NULL) AND [cl].[Ranking] > 0 
-    ORDER BY [cl].[Ranking] ASC
+	WHERE ([cl].[DeleteFlag] = 0 OR [cl].[DeleteFlag] IS NULL) AND [cl].[Ranking] > 0 
+	ORDER BY [cl].[Ranking] ASC
 END
 GO
 
