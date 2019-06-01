@@ -8,6 +8,7 @@
     <Company />
     <Product>GunzCord</Product>
     <Description>Discord Bot for GunZ Servers</Description>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
