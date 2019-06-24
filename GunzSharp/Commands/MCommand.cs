@@ -276,7 +276,7 @@ namespace GunzSharp.Commands
 			dataCount += sizeof(ushort);
 
 			ushort commandID = BitConverter.ToUInt16(data, dataCount);
-			dataCount += sizeof(uint);
+			dataCount += sizeof(ushort);
 
 			MCommandDesc desc = cm.GetCommandDescByID(commandID);
 

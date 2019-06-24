@@ -85,7 +85,7 @@ namespace GunzSharp.Commands.Parameters
 			}
 
 			Value = new byte[size];
-			data.CopyTo(Value, index + sizeof(int));
+			Buffer.BlockCopy(data, index + sizeof(int), Value, 0, size);
 
 			return size + sizeof(int);
 		}

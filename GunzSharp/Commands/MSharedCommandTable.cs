@@ -86,7 +86,7 @@ namespace GunzSharp.Commands
 			cm.C(MSharedCommand.MC_LOCAL_UPDATE_USE_COUNTRY_FILTER, "MC_LOCAL_UPDATE_USE_COUNTRY_FILTER", "update use country filter.", MCommandDescFlags.MCDT_LOCAL);
 
 			cm.C(MSharedCommand.MC_LOCAL_GET_DB_IP_TO_COUNTRY, "MC_LOCAL_GET_DB_IP_TO_COUNTRY", "get db ip to country code.", MCommandDescFlags.MCDT_LOCAL);
-			cm.C(MSharedCommand.MC_LOCAL_UPDATE_BLOCK_COUTRYCODE, "MC_LOCAL_UPDATE_BLOCK_COUTRYCODE", "get db block country code.", MCommandDescFlags.MCDT_LOCAL);
+			cm.C(MSharedCommand.MC_LOCAL_GET_DB_BLOCK_COUNTRY_CODE, "MC_LOCAL_GET_DB_BLOCK_COUNTRY_CODE", "get db block country code.", MCommandDescFlags.MCDT_LOCAL);
 			cm.C(MSharedCommand.MC_LOCAL_GET_DB_CUSTOM_IP, "MC_LOCAL_GET_DB_CUSTOM_IP", "get db custom ip.", MCommandDescFlags.MCDT_LOCAL);
 
 			cm.C(MSharedCommand.MC_LOCAL_UPDATE_IP_TO_COUNTRY, "MC_LOCAL_UPDATE_IP_TO_COUNTRY", "update ip to country code.", MCommandDescFlags.MCDT_LOCAL);

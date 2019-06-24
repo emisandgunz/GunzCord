@@ -29,14 +29,15 @@ namespace GunzSharp
 
 		protected Socket ClientSocket { get; set; }
 
-		protected MCommandBuilder CommandBuilder { get; set; }
+		public MCommandBuilder CommandBuilder { get; protected set; }
 
 		protected MUID Server { get; set; }
 
-		protected MPacketCrypter ServerPacketCrypter { get; set; }
+		public MPacketCrypter ServerPacketCrypter { get; protected set; }
 
 		private MClient()
 		{
+			ServerPacketCrypter = new MPacketCrypter();
 			CommandBuilder = new MCommandBuilder(MUID.Empty, MUID.Empty, CommandManager);
 
 			ClientSocket = new Socket(SocketType.Stream, ProtocolType.Tcp);

@@ -21,8 +21,8 @@ namespace GunzSharp.Commands
 		protected byte[] Buffer { get; set; }
 		protected int BufferNext { get; set; }
 
-		protected LinkedList<MCommand> CommandList { get; set; }
-		protected LinkedList<byte[]> NetCmdList { get; set; }
+		public LinkedList<MCommand> CommandList { get; protected set; }
+		public LinkedList<byte[]> NetCmdList { get; protected set; }
 
 		protected MPacketCrypter PacketCrypter { get; set; }
 		protected MCommandSNChecker CommandSNChecker { get; set; }
@@ -74,7 +74,7 @@ namespace GunzSharp.Commands
 
 				if (packet.Msg == PacketConsts.MSGID_RAWCOMMAND)
 				{
-					ushort checksum = PacketHelpers.BuildChecksum(headerBytes);
+					ushort checksum = PacketHelpers.BuildChecksum(buffer);
 
 					if (packet.Checksum != checksum)
 					{
@@ -286,7 +286,7 @@ namespace GunzSharp.Commands
 			if (NetCmdList.Count > 0)
 			{
 				byte[] cmd = NetCmdList.First.Value;
-				CommandList.RemoveFirst();
+				NetCmdList.RemoveFirst();
 
 				return cmd;
 			}
