@@ -23,7 +23,7 @@ namespace GunzCord.Database.SQLite
 
 		public string ConnectionString { get; protected set; }
 
-		public SQLiteDatabaseService(IConfigurationRoot configuration, ILogger<SQLiteDatabaseService> logger)
+		public SQLiteDatabaseService(IConfiguration configuration, ILogger<SQLiteDatabaseService> logger)
 		{
 			ConnectionString = configuration.GetConnectionString("GunzDB");
 			_logger = logger;

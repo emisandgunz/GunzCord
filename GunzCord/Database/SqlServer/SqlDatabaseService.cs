@@ -23,7 +23,7 @@ namespace GunzCord.Database.SqlServer
 
 		public string ConnectionString { get; protected set; }
 
-		public SqlDatabaseService(IConfigurationRoot configuration, ILogger<SqlDatabaseService> logger)
+		public SqlDatabaseService(IConfiguration configuration, ILogger<SqlDatabaseService> logger)
 		{
 			ConnectionString = configuration.GetConnectionString("GunzDB");
 			_logger = logger;

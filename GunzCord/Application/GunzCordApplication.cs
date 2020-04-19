@@ -1,37 +1,34 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace GunzCord.Application
 {
-	public class GunzCordApplication : IGunzCordApplication
+	public class GunzCordApplication : BackgroundService
 	{
 		private readonly GunzCord _gunzCord;
 
-		private ApplicationLifetime _applicationLifetime;
 		private bool _stopped;
 
-		public IServiceProvider Services { get; }
-
-		public GunzCordApplication(IServiceProvider services)
+		public GunzCordApplication(GunzCord gunzCord)
 		{
-			Services = services;
-
-			_gunzCord = services.GetService<GunzCord>();
+			_gunzCord = gunzCord;
 		}
 
-		public async Task StartAsync(CancellationToken cancellationToken = default)
+		public override void Dispose()
 		{
-			_applicationLifetime = Services.GetRequiredService<IApplicationLifetime>() as ApplicationLifetime;
-
-			await _gunzCord.StartAsync(cancellationToken).ConfigureAwait(false);
-
-			_applicationLifetime?.NotifyStarted();
+			if (!_stopped)
+			{
+				try
+				{
+					StopAsync().GetAwaiter().GetResult();
+				}
+				catch { }
+			}
 		}
 
-		public async Task StopAsync(CancellationToken cancellationToken = default)
+		public override async Task StopAsync(CancellationToken cancellationToken = default)
 		{
 			if (_stopped)
 			{
@@ -50,25 +47,14 @@ namespace GunzCord.Application
 				cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
 			}
 
-			_applicationLifetime?.StopApplication();
 
 			await _gunzCord.StopAsync(cancellationToken).ConfigureAwait(false);
-
-			_applicationLifetime?.NotifyStopped();
+			await base.StopAsync(cancellationToken);
 		}
 
-		public void Dispose()
+		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
-			if (!_stopped)
-			{
-				try
-				{
-					StopAsync().GetAwaiter().GetResult();
-				}
-				catch { }
-			}
-
-			(Services as IDisposable)?.Dispose();
+			await _gunzCord.StartAsync(stoppingToken).ConfigureAwait(false);
 		}
 	}
 }
